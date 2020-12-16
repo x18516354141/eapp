@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.AmountDao">
+    <select id="queryAmount" resultType="com.entity.Amount">
+        SELECT id,name,status,created_time,modified_time
+        FROM t_goods_category
+        ORDER BY id
+    </select>
+    
+    <select id="queryAmountById" resultType="com.entity.Amount">
+        SELECT id,name,status,created_time,modified_time
+        FROM t_goods_category
+        WHERE
+        id=#{id}
+    </select>
+
+    <insert id="insertAmount" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id" parameterType="com.entity.Amount">
+        INSERT INTO
+        t_goods_category(name,status,created_time,modified_time)
+        VALUE
+        (#{name},#{status},#{createdTime},#{modifiedTime})
+    </insert>
+    
+    <update id="updateAmount" parameterType="com.entity.Amount">
+        UPDATE t_goods_category
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="createdTime!=null">created_time=#{createdTime},</if>
+            <if test="modifiedTime!=null">modified_time=#{modifiedTime}</if>
+        </set>
+        WHERE
+        id=#{id}
+    </update>
+
+    <delete id="deleteAmount" parameterType="com.entity.Amount">
+        DELETE FROM
+        t_goods_category
+        WHERE
+        id=#{id}
+    </delete>
+
+</mapper>

@@ -41,8 +41,7 @@ public class IndexController {
     @ResponseBody
     public ServiceResult login(@RequestParam(value = "authCode") String requestAuthCode) {
         //获取accessToken,注意正是代码要有异常流处理
-        String accessToken = AccessTokenUtil.getToken();
-
+        String accessToken="";
         //获取用户信息
         DingTalkClient client = new DefaultDingTalkClient(URLConstant.URL_GET_USER_INFO);
         OapiUserGetuserinfoRequest request = new OapiUserGetuserinfoRequest();
@@ -51,6 +50,7 @@ public class IndexController {
 
         OapiUserGetuserinfoResponse response;
         try {
+            accessToken = AccessTokenUtil.getToken();
             response = client.execute(request, accessToken);
         } catch (ApiException e) {
             e.printStackTrace();
@@ -59,9 +59,9 @@ public class IndexController {
         //3.查询得到当前用户的userId
         // 获得到userId之后应用应该处理应用自身的登录会话管理（session）,避免后续的业务交互（前端到应用服务端）每次都要重新获取用户身份，提升用户体验
         String userId = response.getUserid();
-
+        System.out.println("userId:"+userId);
         String userName = getUserName(accessToken, userId);
-        System.out.println(userName);
+        System.out.println("userName:"+userName);
         //返回结果
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("userId", userId);

@@ -28,7 +28,7 @@ public class AccessTokenUtil {
             String accessToken = response.getAccessToken();
             return accessToken;
         } catch (ApiException e) {
-            bizLogger.error("getAccessToken failed", e);
+            bizLogger.error("获取access_token失败:", e);
             throw new RuntimeException();
         }
 
